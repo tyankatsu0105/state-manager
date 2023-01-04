@@ -14,16 +14,8 @@ builder.prismaObject("Todo", {
     }),
     title: t.exposeString("title", { description: "The title of the Todo" }),
     content: t.exposeString("content", {
-      nullable: true,
       description: "The content of the Todo",
     }),
-  }),
-});
-
-export const CreateTodoInput = builder.inputType("CreateTodoInput", {
-  fields: (t) => ({
-    title: t.string({ required: true }),
-    content: t.string(),
   }),
 });
 
@@ -54,88 +46,81 @@ builder.queryFields((t) => ({
   }),
 }));
 
-// builder.mutationFields((t) => ({
-//   createTodo: t.prismaField({
-//     type: "Todo",
-//     args: {
-//       data: t.arg({
-//         type: CreateTodoInput,
-//       })
-//   })
-// }))
+export const CreateTodoInput = builder.inputType("CreateTodoInput", {
+  fields: (t) => ({
+    title: t.string({ required: true }),
+    content: t.string(),
+  }),
+});
+export const UpdateTodoInput = builder.inputType("UpdateTodoInput", {
+  fields: (t) => ({
+    id: t.int({ required: true }),
+    title: t.string(),
+    content: t.string(),
+  }),
+});
+export const DeleteTodoInput = builder.inputType("DeleteTodoInput", {
+  fields: (t) => ({
+    id: t.int({ required: true }),
+  }),
+});
 
-// builder.mutationFields((t) => ({
-//   createDraft: t.prismaField({
-//     type: "Post",
-//     args: {
-//       data: t.arg({
-//         type: PostCreateInput,
-//         required: true,
-//       }),
-//       authorEmail: t.arg.string({ required: true }),
-//     },
-//     resolve: (query, parent, args) => {
-//       return prisma.post.create({
-//         ...query,
-//         data: {
-//           title: args.data.title,
-//           content: args.data.content ?? undefined,
-//           published: false,
-//           author: {
-//             connect: {
-//               email: args.authorEmail,
-//             },
-//           },
-//         },
-//       });
-//     },
-//   }),
-//   togglePublishPost: t.prismaField({
-//     type: "Post",
-//     args: {
-//       id: t.arg.int({ required: true }),
-//     },
-//     resolve: async (query, parent, args) => {
-//       // Toggling become simpler once this bug is resolved: https://github.com/prisma/prisma/issues/16715
-//       const postPublished = await prisma.post.findUnique({
-//         where: { id: args.id },
-//         select: { published: true },
-//       });
-//       console.log(postPublished);
-//       return prisma.post.update({
-//         ...query,
-//         where: { id: args.id },
-//         data: { published: !postPublished?.published },
-//       });
-//     },
-//   }),
-//   incrementPostViewCount: t.prismaField({
-//     type: "Post",
-//     args: {
-//       id: t.arg.int({ required: true }),
-//     },
-//     resolve: (query, parent, args) => {
-//       return prisma.post.update({
-//         ...query,
-//         where: { id: args.id },
-//         data: {
-//           viewCount: {
-//             increment: 1,
-//           },
-//         },
-//       });
-//     },
-//   }),
-//   deletePost: t.prismaField({
-//     type: "Post",
-//     args: {
-//       id: t.arg.int({ required: true }),
-//     },
-//     resolve: (query, parent, args) => {
-//       return prisma.post.delete({
-//         ...query,
-//         where: { id: args.id },
-//       });
-//     },
-//   }),
-// }));
+builder.mutationFields((t) => ({
+  createTodo: t.prismaField({
+    type: "Todo",
+    description: "Create a new Todo",
+    args: {
+      data: t.arg({
+        type: CreateTodoInput,
+        required: true,
+      }),
+    },
+    resolve: (query, root, args, ctx, info) =>
+      prisma.todo.create({
+        ...query,
+        data: {
+          title: args.data.title,
+          content: args.data.content ?? "",
+        },
+      }),
+  }),
+  updateTodo: t.prismaField({
+    type: "Todo",
+    description: "Update a Todo",
+    args: {
+      data: t.arg({
+        type: UpdateTodoInput,
+        required: true,
+      }),
+    },
+    resolve: (query, root, args, ctx, info) =>
+      prisma.todo.update({
+        ...query,
+        data: {
+          title: args.data.title ?? "",
+          content: args.data.title ?? "",
+        },
+        where: {
+          id: args.data.id,
+        },
+      }),
+  }),
+  deleteTodo: t.prismaField({
+    type: "Todo",
+    description: "Delete a Todo",
+    args: {
+      data: t.arg({
+        type: DeleteTodoInput,
+        required: true,
+      }),
+    },
+    resolve: (query, root, args, ctx, info) =>
+      prisma.todo.update({
+        ...query,
+        data: {},
+        where: {
+          id: args.data.id,
+        },
+      }),
+  }),
+}));

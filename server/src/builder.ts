@@ -14,6 +14,7 @@ type Types = {
     };
   };
 };
+
 export const builder = new SchemaBuilder<Types>({
   plugins: [PrismaPlugin],
   prisma: {

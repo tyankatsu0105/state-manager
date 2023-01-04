@@ -12,7 +12,20 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
-type Mutation
+input DeleteTodoInput {
+  id: Int!
+}
+
+type Mutation {
+  """Create a new Todo"""
+  createTodo(data: CreateTodoInput!): Todo!
+
+  """Delete a Todo"""
+  deleteTodo(data: DeleteTodoInput!): Todo!
+
+  """Update a Todo"""
+  updateTodo(data: UpdateTodoInput!): Todo!
+}
 
 type Query {
   """Find a single Todo by id"""
@@ -24,7 +37,7 @@ type Query {
 
 type Todo {
   """The content of the Todo"""
-  content: String
+  content: String!
 
   """The date and time the Todo was created"""
   createdAt: DateTime!
@@ -37,4 +50,10 @@ type Todo {
 
   """The date and time the Todo was last updated"""
   updatedAt: DateTime!
+}
+
+input UpdateTodoInput {
+  content: String
+  id: Int!
+  title: String
 }
