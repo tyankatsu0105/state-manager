@@ -16,20 +16,24 @@ input DeleteTodoInput {
   id: Int!
 }
 
+input FindTodoInput {
+  id: Int!
+}
+
 type Mutation {
   """Create a new Todo"""
-  createTodo(data: CreateTodoInput!): Todo!
+  createTodo(input: CreateTodoInput!): Todo!
 
   """Delete a Todo"""
-  deleteTodo(data: DeleteTodoInput!): Todo!
+  deleteTodo(input: DeleteTodoInput!): Todo!
 
   """Update a Todo"""
-  updateTodo(data: UpdateTodoInput!): Todo!
+  updateTodo(input: UpdateTodoInput!): Todo!
 }
 
 type Query {
-  """Find a single Todo by id"""
-  findTodo(id: Int!): Todo
+  """Find a single Todo"""
+  findTodo(input: FindTodoInput!): Todo
 
   """Find all Todos"""
   findTodos: [Todo!]

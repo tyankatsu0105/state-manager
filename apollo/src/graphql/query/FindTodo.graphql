@@ -1,0 +1,8 @@
+query FindTodo($input: FindTodoInput!) {
+  findTodo(input: $input) {
+    id
+    title
+    content
+    createdAt
+  }
+}
