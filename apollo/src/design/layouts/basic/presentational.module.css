@@ -1,0 +1,30 @@
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header {
+  text-align: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 12px 20px;
+}
+.header .heading {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.main {
+  padding: 12px 20px;
+  background-color: #fff;
+}
+
+.footer {
+  padding: 12px 20px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #fff;
+}
