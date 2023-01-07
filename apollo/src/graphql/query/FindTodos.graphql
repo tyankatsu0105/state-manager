@@ -1,7 +1,0 @@
-query FindTodos {
-  findTodos {
-    id
-    title
-    createdAt
-  }
-}

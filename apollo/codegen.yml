@@ -1,0 +1,14 @@
+schema: ../server/schema.graphql
+documents:
+  - "src/**/*.graphql"
+emitLegacyCommonJSImports: false
+generates:
+  ./src/api/graphql.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      nonOptionalTypename: true
+      scalars:
+        DateTime: string
