@@ -107,7 +107,7 @@ builder.mutationFields((t) => ({
         ...query,
         data: {
           title: args.input.title ?? "",
-          content: args.input.title ?? "",
+          content: args.input.content ?? "",
         },
         where: {
           id: args.input.id,

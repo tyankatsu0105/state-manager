@@ -13,6 +13,7 @@ const userData: Prisma.TodoCreateInput[] = [
     title: "second todo",
     createdAt: new Date(),
     updatedAt: new Date(),
+    content: "",
   },
   {
     title: "third todo",
