@@ -19,14 +19,13 @@ builder.prismaObject("Todo", {
   }),
 });
 
-export const FindTodoInput = builder.inputType("FindTodoInput", {
+const FindTodoInput = builder.inputType("FindTodoInput", {
   fields: (t) => ({
     id: t.int({ required: true }),
   }),
 });
-
-builder.queryFields((t) => ({
-  findTodo: t.prismaField({
+builder.queryField("findTodo", (t) =>
+  t.prismaField({
     type: "Todo",
     nullable: true,
     description: "Find a single Todo",
@@ -43,39 +42,31 @@ builder.queryFields((t) => ({
           id: args.input.id,
         },
       }),
-  }),
-  findTodos: t.prismaField({
-    type: ["Todo"],
-    nullable: true,
+  })
+);
+
+builder.queryField("findTodos", (t) =>
+  t.prismaConnection({
+    type: "Todo",
+    cursor: "id",
     description: "Find all Todos",
-    resolve: (query) =>
-      prisma.todo.findMany({
-        ...query,
-      }),
-  }),
-}));
+    resolve: async (query, root, args, ctx, info) => {
+      return await prisma.todo.findMany({ ...query });
+    },
+    totalCount: async () => {
+      return await prisma.todo.count();
+    },
+  })
+);
 
 const CreateTodoInput = builder.inputType("CreateTodoInput", {
   fields: (t) => ({
     title: t.string({ required: true }),
-    content: t.string(),
+    content: t.string({ required: true }),
   }),
 });
-const UpdateTodoInput = builder.inputType("UpdateTodoInput", {
-  fields: (t) => ({
-    id: t.int({ required: true }),
-    title: t.string(),
-    content: t.string(),
-  }),
-});
-const DeleteTodoInput = builder.inputType("DeleteTodoInput", {
-  fields: (t) => ({
-    id: t.int({ required: true }),
-  }),
-});
-
-builder.mutationFields((t) => ({
-  createTodo: t.prismaField({
+builder.mutationField("createTodo", (t) =>
+  t.prismaField({
     type: "Todo",
     description: "Create a new Todo",
     args: {
@@ -92,8 +83,18 @@ builder.mutationFields((t) => ({
           content: args.input.content ?? "",
         },
       }),
+  })
+);
+
+const UpdateTodoInput = builder.inputType("UpdateTodoInput", {
+  fields: (t) => ({
+    id: t.int({ required: true }),
+    title: t.string({ required: true }),
+    content: t.string({ required: true }),
   }),
-  updateTodo: t.prismaField({
+});
+builder.mutationField("updateTodo", (t) =>
+  t.prismaField({
     type: "Todo",
     description: "Update a Todo",
     args: {
@@ -106,15 +107,23 @@ builder.mutationFields((t) => ({
       prisma.todo.update({
         ...query,
         data: {
-          title: args.input.title ?? "",
-          content: args.input.content ?? "",
+          title: args.input.title,
+          content: args.input.content,
         },
         where: {
           id: args.input.id,
         },
       }),
+  })
+);
+
+const DeleteTodoInput = builder.inputType("DeleteTodoInput", {
+  fields: (t) => ({
+    id: t.int({ required: true }),
   }),
-  deleteTodo: t.prismaField({
+});
+builder.mutationField("deleteTodo", (t) =>
+  t.prismaField({
     type: "Todo",
     description: "Delete a Todo",
     args: {
@@ -124,12 +133,11 @@ builder.mutationFields((t) => ({
       }),
     },
     resolve: (query, root, args, ctx, info) =>
-      prisma.todo.update({
+      prisma.todo.delete({
         ...query,
-        data: {},
         where: {
           id: args.input.id,
         },
       }),
-  }),
-}));
+  })
+);
