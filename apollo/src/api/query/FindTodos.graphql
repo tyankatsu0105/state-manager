@@ -3,6 +3,9 @@ query FindTodos {
     edges {
       node {
         id
+        title
+        content
+        createdAt
       }
     }
   }

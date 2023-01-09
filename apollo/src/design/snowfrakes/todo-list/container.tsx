@@ -1,8 +1,11 @@
+import React from "react";
 import { Presentational } from "./presentational";
-import { useFindTodosQuery } from "~api/graphql";
-export const TodoList = () => {
-  const { data } = useFindTodosQuery();
-  console.log({ data });
+import { useTodos } from "./facade";
 
-  return <Presentational />;
+const Component = () => {
+  const { todos } = useTodos();
+
+  return <Presentational todos={todos} />;
 };
+
+export const TodoList = React.memo(Component);

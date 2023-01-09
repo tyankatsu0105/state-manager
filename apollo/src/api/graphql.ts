@@ -127,7 +127,7 @@ export type FindTodoQuery = { __typename: 'Query', findTodo?: { __typename: 'Tod
 export type FindTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindTodosQuery = { __typename: 'Query', findTodos: { __typename: 'QueryFindTodosConnection', edges: Array<{ __typename: 'QueryFindTodosConnectionEdge', node?: { __typename: 'Todo', id: number } | null }> } };
+export type FindTodosQuery = { __typename: 'Query', findTodos: { __typename: 'QueryFindTodosConnection', edges: Array<{ __typename: 'QueryFindTodosConnectionEdge', node?: { __typename: 'Todo', id: number, title: string, content: string, createdAt: string } | null }> } };
 
 
 export const FindTodoDocument = gql`
@@ -174,6 +174,9 @@ export const FindTodosDocument = gql`
     edges {
       node {
         id
+        title
+        content
+        createdAt
       }
     }
   }
