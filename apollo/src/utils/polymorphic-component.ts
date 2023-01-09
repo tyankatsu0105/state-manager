@@ -1,3 +1,5 @@
+// https://github.com/kripod/react-polymorphic-types/blob/30ba44854a4edec6dcb5ae797c6df4e849ab73db/index.d.ts
+
 import * as React from "react";
 
 /**
@@ -31,4 +33,24 @@ export type PolymorphicComponentProps<
     ? React.PropsWithRef<JSX.IntrinsicElements[Element]>
     : React.ComponentPropsWithRef<Element>,
   Props & { [key in PolymorphicPropsName]?: Element }
+>;
+
+type PolymorphicExoticComponent<
+  Props = {},
+  Element extends React.ElementType = React.ElementType
+> = Merge<
+  React.ExoticComponent<Props & { [key: string]: unknown }>,
+  {
+    <InstanceT extends React.ElementType = Element>(
+      props: PolymorphicComponentProps<Props, InstanceT>
+    ): React.ReactElement | null;
+  }
+>;
+
+export type PolymorphicMemoExoticComponent<
+  Props,
+  Element extends React.ElementType
+> = Merge<
+  React.MemoExoticComponent<React.ComponentType<any>>,
+  PolymorphicExoticComponent<Props, Element>
 >;
