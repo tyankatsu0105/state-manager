@@ -22,3 +22,14 @@
       - db
 - apollo
   - https://www.apollographql.com
+
+## Usage
+
+```bash
+make run-server
+make run-client
+```
+
+```bash
+make down-server
+```
