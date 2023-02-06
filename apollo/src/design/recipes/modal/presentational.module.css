@@ -1,0 +1,30 @@
+.container {
+  border: 2px solid #333;
+  border-radius: 6px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
+
+.header {
+  padding: 12px 20px;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.body {
+  border-top: 1px solid #333;
+  padding: 12px 20px;
+}
+
+.footer {
+  border-top: 1px solid #333;
+  padding: 12px 20px;
+  display: grid;
+  grid-template-columns: 120px 120px 120px;
+  grid-template-rows: 60px;
+  column-gap: 12px;
+  justify-content: end;
+}
