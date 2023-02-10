@@ -1,11 +1,9 @@
 import React from "react";
 import styles from "./presentational.module.css";
-import {
-  PolymorphicComponentProps,
-  PolymorphicMemoExoticComponent,
-} from "~utils/polymorphic-component";
+
 import { Backdrop } from "../../components/backdrop";
-type FeatureProps = {
+
+type FeatureProps = React.ComponentPropsWithRef<"dialog"> & {
   renderHeader?: (props: {
     styles: {
       header: typeof styles.header;
@@ -21,58 +19,55 @@ type FeatureProps = {
       footer: typeof styles.footer;
     };
   }) => React.ReactNode;
+  onClickBackdrop?: React.ComponentProps<"div">["onClick"];
 };
 
 export const defaultElement = "dialog";
 
-const Component = <Element extends React.ElementType = typeof defaultElement>(
-  props: PolymorphicComponentProps<FeatureProps, Element>
-) => {
+const Component = (props: FeatureProps) => {
   const {
-    as,
     renderHeader,
     renderBody,
     renderFooter,
     className = "",
     open,
+    onClickBackdrop,
     ...restProps
   } = props;
-  const Element = as || defaultElement;
 
   return (
     <>
-      <div>
-        <Backdrop onClick={() => console.log("aaaaaaa")} />
-        <Element
-          className={`${className} ${styles.container}`}
-          open={open}
-          {...restProps}
-        >
-          {renderHeader &&
-            renderHeader({
-              styles: {
-                header: styles.header,
-              },
-            })}
-          {renderBody &&
-            renderBody({
-              styles: {
-                body: styles.body,
-              },
-            })}
-          {renderFooter &&
-            renderFooter({
-              styles: {
-                footer: styles.footer,
-              },
-            })}
-        </Element>
-      </div>
+      {open && (
+        <div>
+          <Backdrop onClick={onClickBackdrop} as="div" />
+          <dialog
+            className={`${className} ${styles.container}`}
+            open={open}
+            {...restProps}
+          >
+            {renderHeader &&
+              renderHeader({
+                styles: {
+                  header: styles.header,
+                },
+              })}
+            {renderBody &&
+              renderBody({
+                styles: {
+                  body: styles.body,
+                },
+              })}
+            {renderFooter &&
+              renderFooter({
+                styles: {
+                  footer: styles.footer,
+                },
+              })}
+          </dialog>
+        </div>
+      )}
     </>
   );
 };
 
-export const Presentational: PolymorphicMemoExoticComponent<
-  FeatureProps,
-  typeof defaultElement
-> = React.memo(Component);
+export const Presentational = React.memo(Component);

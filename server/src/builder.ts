@@ -15,7 +15,7 @@ type Types = {
     };
   };
   DefaultEdgesNullability: false;
-  DefaultNodeNullability: true;
+  DefaultNodeNullability: false;
 };
 
 export const builder = new SchemaBuilder<Types>({
@@ -28,7 +28,7 @@ export const builder = new SchemaBuilder<Types>({
       nullable: false,
     },
     nodeFieldOptions: {
-      nullable: true,
+      nullable: false,
     },
   },
 });

@@ -94,7 +94,7 @@ export type QueryFindTodosConnection = {
 export type QueryFindTodosConnectionEdge = {
   __typename: 'QueryFindTodosConnectionEdge';
   cursor: Scalars['String'];
-  node?: Maybe<Todo>;
+  node: Todo;
 };
 
 export type Todo = {
@@ -122,12 +122,12 @@ export type FindTodoQueryVariables = Exact<{
 }>;
 
 
-export type FindTodoQuery = { __typename: 'Query', findTodo?: { __typename: 'Todo', id: number, title: string, content: string, createdAt: string } | null };
+export type FindTodoQuery = { __typename: 'Query', findTodo?: { __typename: 'Todo', id: number, title: string, content: string, createdAt: string, updatedAt: string } | null };
 
 export type FindTodosQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FindTodosQuery = { __typename: 'Query', findTodos: { __typename: 'QueryFindTodosConnection', edges: Array<{ __typename: 'QueryFindTodosConnectionEdge', node?: { __typename: 'Todo', id: number, title: string, content: string, createdAt: string } | null }> } };
+export type FindTodosQuery = { __typename: 'Query', findTodos: { __typename: 'QueryFindTodosConnection', edges: Array<{ __typename: 'QueryFindTodosConnectionEdge', node: { __typename: 'Todo', id: number, title: string, content: string, updatedAt: string } }> } };
 
 
 export const FindTodoDocument = gql`
@@ -137,6 +137,7 @@ export const FindTodoDocument = gql`
     title
     content
     createdAt
+    updatedAt
   }
 }
     `;
@@ -176,7 +177,7 @@ export const FindTodosDocument = gql`
         id
         title
         content
-        createdAt
+        updatedAt
       }
     }
   }

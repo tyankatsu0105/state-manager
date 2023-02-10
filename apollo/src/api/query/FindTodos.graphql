@@ -5,7 +5,7 @@ query FindTodos {
         id
         title
         content
-        createdAt
+        updatedAt
       }
     }
   }

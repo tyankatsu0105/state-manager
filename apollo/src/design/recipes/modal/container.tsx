@@ -1,28 +1,20 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
-import { Presentational, defaultElement } from "./presentational";
-import {
-  PolymorphicMemoExoticComponent,
-  PolymorphicComponentProps,
-} from "~utils/polymorphic-component";
+import { Presentational } from "./presentational";
 
 import { useCreateModal } from "./facade";
 
-type FeatureProps = {
-  as?: React.ComponentProps<typeof Presentational>["as"];
+type FeatureProps = React.ComponentPropsWithRef<"dialog"> & {
   renderHeader?: React.ComponentProps<typeof Presentational>["renderHeader"];
   renderBody?: React.ComponentProps<typeof Presentational>["renderBody"];
   renderFooter?: React.ComponentProps<typeof Presentational>["renderFooter"];
+  onClickBackdrop?: React.ComponentProps<
+    typeof Presentational
+  >["onClickBackdrop"];
 };
 
-const Component = <Element extends React.ElementType = typeof defaultElement>(
-  props: PolymorphicComponentProps<FeatureProps, Element>
-) => {
+const Component = (props: FeatureProps) => {
   return useCreateModal({ children: <Presentational {...props} /> });
 };
 
-export const Modal: PolymorphicMemoExoticComponent<
-  FeatureProps,
-  typeof defaultElement
-> = React.memo(Component);
+export const Modal = React.memo(Component);

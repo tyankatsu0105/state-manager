@@ -1,0 +1,15 @@
+.card {
+  transition: 0.3s;
+}
+.card:hover {
+  transform: scale(1.01);
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.modal-footer {
+  grid-template-columns: 120px;
+}

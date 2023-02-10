@@ -4,5 +4,6 @@ query FindTodo($input: FindTodoInput!) {
     title
     content
     createdAt
+    updatedAt
   }
 }

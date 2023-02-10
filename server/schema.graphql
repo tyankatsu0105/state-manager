@@ -54,7 +54,7 @@ type QueryFindTodosConnection {
 
 type QueryFindTodosConnectionEdge {
   cursor: String!
-  node: Todo
+  node: Todo!
 }
 
 type Todo {

@@ -1,0 +1,20 @@
+.container {
+  border-radius: 6px;
+  padding: 16px 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.normal {
+  background-color: #ccc;
+  color: #333;
+}
+
+.success {
+  background-color: #27a827;
+  color: #fff;
+}
+.error {
+  background-color: rgb(218, 91, 12);
+  color: #fff;
+}
