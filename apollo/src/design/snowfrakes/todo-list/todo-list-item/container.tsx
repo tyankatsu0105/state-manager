@@ -1,6 +1,6 @@
 import React from "react";
 import { Presentational } from "./presentational";
-import { useTodos } from "./facade";
+import { useTodo } from "./facade";
 import { useModal } from "../../../recipes/modal";
 
 type Props = {
@@ -8,8 +8,16 @@ type Props = {
 };
 const Component = (props: Props) => {
   const modal = useModal({ initialOpen: false });
+  const { handleFindTodo, todoDetail } = useTodo({ todoID: props.todo.id });
 
-  return <Presentational todo={props.todo} modal={modal} />;
+  return (
+    <Presentational
+      todo={props.todo}
+      modal={modal}
+      handleFindTodo={handleFindTodo}
+      todoDetail={todoDetail}
+    />
+  );
 };
 
 export const TodoListItem = React.memo(Component);

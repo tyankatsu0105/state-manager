@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "../../../components/card";
-import { FindTodosQuery } from "~api/graphql";
+import { FindTodosQuery, FindTodoQuery } from "~api/graphql";
 import styles from "./presentational.module.css";
 import { Modal } from "../../../recipes/modal";
 import { Button } from "../../../components/button";
@@ -12,6 +12,8 @@ type Props = {
     readonly handleOpen: () => void;
     readonly handleClose: () => void;
   };
+  readonly handleFindTodo: () => void;
+  readonly todoDetail: FindTodoQuery["findTodo"];
 };
 
 const Component: React.FC<Props> = (props) => (
@@ -33,23 +35,24 @@ const Component: React.FC<Props> = (props) => (
           </div>
         )}
         type="button"
-        onClick={props.modal.handleOpen}
+        onClick={() => {
+          props.modal.handleOpen();
+          props.handleFindTodo();
+        }}
       />
     </li>
 
     <Modal
       onClickBackdrop={props.modal.handleClose}
       open={props.modal.isOpen}
-      renderHeader={(props) => <h2 className={props.styles.header}>Header</h2>}
+      renderHeader={(renderHeaderProps) => (
+        <h2 className={renderHeaderProps.styles.header}>
+          {props.todoDetail?.title}
+        </h2>
+      )}
       renderBody={(renderBodyProps) => (
         <p className={renderBodyProps.styles.body}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt
-          voluptas ducimus asperiores autem illum facilis incidunt eos sapiente,
-          id alias optio nemo voluptatum, labore culpa expedita nulla, numquam
-          doloremque beatae. Lorem ipsum dolor sit amet consectetur adipisicing
-          elit. Deserunt voluptas ducimus asperiores autem illum facilis
-          incidunt eos sapiente, id alias optio nemo voluptatum, labore culpa
-          expedita nulla, numquam doloremque beatae.
+          {props.todoDetail?.content}
         </p>
       )}
       renderFooter={(renderFooterProps) => (

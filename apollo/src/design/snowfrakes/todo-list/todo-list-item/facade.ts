@@ -1,8 +1,20 @@
-import { useFindTodosQuery } from "~api/graphql";
+import { useFindTodoLazyQuery, FindTodoQueryVariables } from "~api/graphql";
 
-export const useTodos = () => {
-  const { data } = useFindTodosQuery();
-  const todos = data?.findTodos.edges ?? [];
+type UseTodoProps = {
+  todoID: FindTodoQueryVariables["input"]["id"];
+};
+export const useTodo = (props: UseTodoProps) => {
+  const [fetch, { data }] = useFindTodoLazyQuery();
+  const handleFindTodo = () => {
+    try {
+      fetch({ variables: { input: { id: props.todoID } } });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  return { todos };
+  return {
+    handleFindTodo,
+    todoDetail: data?.findTodo ?? null,
+  };
 };
