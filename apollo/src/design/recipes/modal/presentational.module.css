@@ -12,21 +12,22 @@
   min-width: 50vw;
 }
 
-.header {
+.header-container {
   padding: 12px 20px;
+}
+.header {
   font-weight: bold;
   font-size: 2rem;
 }
 
 .body {
-  border-top: 1px solid #333;
   padding: 12px 20px;
+  border-top: 1px solid #333;
   overflow: scroll;
 }
-
 .footer {
-  border-top: 1px solid #333;
   padding: 12px 20px;
+  border-top: 1px solid #333;
   display: grid;
   grid-template-rows: 1fr;
   column-gap: 12px;

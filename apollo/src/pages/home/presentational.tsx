@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TodoList } from "../../design/snowfrakes/todo-list";
+import { TodoList } from "./todo-list";
 
 // ------------------------------------
 // Props

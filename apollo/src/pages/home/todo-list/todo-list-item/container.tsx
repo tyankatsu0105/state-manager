@@ -1,7 +1,7 @@
 import React from "react";
 import { Presentational } from "./presentational";
 import { useTodo } from "./facade";
-import { useModal } from "../../../recipes/modal";
+import { useModal } from "../../../../design/recipes/modal";
 
 type Props = {
   todo: any;

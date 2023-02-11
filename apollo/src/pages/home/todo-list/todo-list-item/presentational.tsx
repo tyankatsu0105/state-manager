@@ -1,9 +1,9 @@
 import React from "react";
-import { Card } from "../../../components/card";
+import { Card } from "../../../../design/components/card";
 import { FindTodosQuery, FindTodoQuery } from "~api/graphql";
 import styles from "./presentational.module.css";
-import { Modal } from "../../../recipes/modal";
-import { Button } from "../../../components/button";
+import { Modal } from "../../../../design/recipes/modal";
+import { Button } from "../../../../design/components/button";
 
 type Props = {
   readonly todo: FindTodosQuery["findTodos"]["edges"][number]["node"];
@@ -46,9 +46,13 @@ const Component: React.FC<Props> = (props) => (
       onClickBackdrop={props.modal.handleClose}
       open={props.modal.isOpen}
       renderHeader={(renderHeaderProps) => (
-        <h2 className={renderHeaderProps.styles.header}>
-          {props.todoDetail?.title}
-        </h2>
+        <>
+          <h2 className={renderHeaderProps.styles.header}>
+            {props.todoDetail?.title}
+          </h2>
+          <p>createdAt: {props.todoDetail?.createdAt}</p>
+          <p>updatedAt: {props.todoDetail?.updatedAt}</p>
+        </>
       )}
       renderBody={(renderBodyProps) => (
         <p className={renderBodyProps.styles.body}>

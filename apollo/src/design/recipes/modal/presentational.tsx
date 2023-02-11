@@ -45,18 +45,23 @@ const Component = (props: FeatureProps) => {
             open={open}
             {...restProps}
           >
-            {renderHeader &&
-              renderHeader({
-                styles: {
-                  header: styles.header,
-                },
-              })}
+            {renderHeader && (
+              <div className={styles["header-container"]}>
+                {renderHeader({
+                  styles: {
+                    header: styles.header,
+                  },
+                })}
+              </div>
+            )}
+
             {renderBody &&
               renderBody({
                 styles: {
                   body: styles.body,
                 },
               })}
+
             {renderFooter &&
               renderFooter({
                 styles: {
